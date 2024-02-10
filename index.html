@@ -4,14 +4,15 @@
 <head>
     <title>My Web Page</title>
     <script>
-        var audioFiles = ['Denon-PMA2500NE_1.mp3', 'NAD-C388_1.mp3', 'NAIM-NAIT-XS3_1.mp3', 'Yamaha-A-S1200_1.mp3', 'Pri.mp3'];
-        var audioFiles = ['Denon-PMA2500NE_2.mp3', 'NAD-C388_2.mp3', 'NAIM-NAIT-XS3_2.mp3', 'Yamaha-A-S1200_2.mp3', 'Pri2.mp3'];
+        var audioFiles = ['Denon-PMA2500NE.mp3', 'NAD-C388.mp3', 'NAIM-NAIT-XS3.mp3', 'Yamaha-A-S1200.mp3', 'Primare.mp3'];
         var sources = [];
         var gainNodes = [];
         var currentTrackIndex = -1;
         var intervalId; // Variable to store the interval ID
 
         function loadTracks() {
+            stopAudio(); // Stop the audio if it is already playing
+
             var audioContext = new (window.AudioContext || window.webkitAudioContext)();
             var buffers = [];
             var loadedCount = 0;
@@ -88,7 +89,7 @@
             }
 
             audioFiles.forEach(function(file, index) {
-                loadAudio(file, index);
+                loadAudio("mp3/" + document.getElementById('track').value + "/" + file, index);
             });
         }
 
@@ -102,12 +103,21 @@
             document.getElementById('trackName').textContent = ''; // Clear the track name
             clearInterval(intervalId); // Clear the interval
         }
+
+        function resetAudio() {
+            stopAudio();
+            loadTracks();
+        }
     </script>
 </head>
 
 <body>
-    <h1>Welcome to My Web Page</h1>
+    <h1>Audio Swapper</h1>
     <p>This is a sample web page.</p>
+    <select id="track">
+        <option value="fugue">Little Fugue In G Minor</option>
+        <option value="opera">Opera</option>
+    </select>
     <button onclick="loadTracks()">Start</button>
     <button onclick="stopAudio()">Stop</button>
     <button onclick="resetAudio()">Reset</button>
