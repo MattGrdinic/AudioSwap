@@ -10,6 +10,7 @@ var gainNodes = [];
 var currentTrackIndex = -1;
 var intervalId; // Variable to store the interval ID
 var loadingInProgress = false; // Flag to track loading state
+var loadedCount = 0; // Variable to track the number of loaded audio files
 
 function loadTracks() {
   if (loadingInProgress) {
@@ -20,7 +21,6 @@ function loadTracks() {
 
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   var buffers = [];
-  var loadedCount = 0;
 
   function loadAudio(url, index) {
     loadingInProgress = true; // Set loading state to true
@@ -34,7 +34,12 @@ function loadTracks() {
         buffers[index] = buffer;
         loadedCount++;
 
+        // Calculate the progress percentage
+        var progress = Math.floor((loadedCount / audioFiles.length) * 100);
+        updateLoadingProgress(progress);
+
         if (loadedCount === audioFiles.length) {
+          loadingInProgress = false; // Reset loading state
           playTracks();
         }
       });
@@ -105,6 +110,20 @@ function loadTracks() {
   });
 }
 
+function updateLoadingProgress(progress) {
+  let progressBar = document.getElementById("progressBar");
+  progressBar.style.opacity = 1; // Show the progress bar
+  progressBar.style.width = progress + "%"; // Update the progress bar width
+  progressBar.textContent = progress + "%"; // Update the progress bar text
+
+  if (progress === 100) {
+    setTimeout(function () {
+      progressBar.style.opacity = 0; // Fade out the progress bar
+      progressBar.style.transition = "opacity 1s"; // Apply CSS transition
+    }, 500);
+  }
+}
+
 function stopAudio() {
   sources.forEach(function (source) {
     source.stop();
@@ -115,6 +134,8 @@ function stopAudio() {
   document.getElementById("trackName").textContent = ""; // Clear the track name
   clearInterval(intervalId); // Clear the interval
   loadingInProgress = false; // Reset loading state
+  loadedCount = 0; // Reset loaded count
+  updateLoadingProgress(0); // Reset the progress bar
 }
 
 function resetAudio() {

@@ -81,6 +81,31 @@ button.reset:hover {
     text-align: center;
     margin-top: 20px;
     font-weight: bold;
+    height: 28px;
+}
+
+.progressHolder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+progress {
+    opacity: 0;
+    width: 100%;
+    height: 10px; /* Update the height of the progress bar */
+    background-color: #e0e0e0; /* Update the background color of the progress bar */
+    border-radius: 5px; /* Add border radius to the progress bar */
+}
+
+progress::-webkit-progress-value {
+    background-color: #97b9db; /* Update the color of the progress bar fill */
+    border-radius: 5px; /* Add border radius to the progress bar fill */
+}
+
+progress::-moz-progress-bar {
+    background-color: #97b9db; /* Update the color of the progress bar fill for Firefox */
+    border-radius: 5px; /* Add border radius to the progress bar fill for Firefox */
 }
 
 .notice {
