@@ -9,8 +9,13 @@ var sources = [];
 var gainNodes = [];
 var currentTrackIndex = -1;
 var intervalId; // Variable to store the interval ID
+var loadingInProgress = false; // Flag to track loading state
 
 function loadTracks() {
+  if (loadingInProgress) {
+    return; // Return if loading is already in progress
+  }
+
   stopAudio(); // Stop the audio if it is already playing
 
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -18,6 +23,8 @@ function loadTracks() {
   var loadedCount = 0;
 
   function loadAudio(url, index) {
+    loadingInProgress = true; // Set loading state to true
+
     var request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.responseType = "arraybuffer";
@@ -107,9 +114,19 @@ function stopAudio() {
   currentTrackIndex = -1;
   document.getElementById("trackName").textContent = ""; // Clear the track name
   clearInterval(intervalId); // Clear the interval
+  loadingInProgress = false; // Reset loading state
 }
 
 function resetAudio() {
   stopAudio();
   loadTracks();
+}
+
+function toggleTrackName() {
+  var title = document.getElementById("trackName");
+  if (title.style.display === "none") {
+    title.style.display = "block";
+  } else {
+    title.style.display = "none";
+  }
 }

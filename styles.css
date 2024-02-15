@@ -1,11 +1,3 @@
-button.stop {
-    background-color: rgb(124, 124, 124);
-}
-
-button.reset {
-    background-color: rgb(206, 206, 206);
-}
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -23,6 +15,11 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #97b9db;
 }
 
 h1 {
@@ -54,6 +51,32 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    background-color: rgb(201, 82, 82);
+}
+
+button.stop {
+    background-color: rgb(124, 124, 124);
+}
+
+button.stop:hover {
+    background-color: rgb(94, 94, 94);
+}
+
+button.reset {
+    background-color: rgb(206, 206, 206);
+}
+
+button.reset:hover {
+    background-color: rgb(176, 176, 176);
+}
+
+#playback-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Add this line to create space between elements */
+}
+
 #trackName {
     text-align: center;
     margin-top: 20px;
@@ -62,6 +85,7 @@ button {
 
 .notice {
     text-align: center;
+    color: #949494;
     position: fixed;
     bottom: 0;
     left: 0;
